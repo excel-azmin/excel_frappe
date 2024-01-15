@@ -124,6 +124,29 @@ class ERPNext {
     return this.put('Customer', name, data);
   }
 
+  async getTotalCount() {
+    var _this = this;
+    return _this.login().then(function (res) {
+      const doctype = 'Sales Invoice';
+      const fields = '["count"(`tabSales Invoice`.`name`) AS total_count ]';
+      const filters = '[["customer_name", "=", "SOURCE AND SERVICE - MOTIJHEEL"]]';
+      var params = {
+        url: _this.baseUrl + `/api/method/frappe.client.get_count?doctype=${doctype}&filters=${filters}&fields=${fields}`,
+        jar: _this.cookieJar,
+      };
+  
+      console.log(params.url)
+  
+      return requestPromise.get(params).then(function (data) {
+        const result = JSON.parse(data);
+        console.log(result);
+        return result;
+      });
+    });
+  }
+
+
+   // return "http://excel_erpnext.localhost:8000/api/method/frappe.client.get_count?doctype=Customer&fields=%5B%22count(%20%60tabCustomer%60.name%29%20AS%20total_count%22%5D"
   // Add more methods for other resources and functionalities
 
   // Example usage:

@@ -29,4 +29,6 @@ function fetchCustomers() {
   }
 
   
-  fetchCustomers();
+  // fetchCustomers();
+
+  console.log(erpNext.getTotalCount())
