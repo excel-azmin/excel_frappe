@@ -31,4 +31,17 @@ function fetchCustomers() {
   
   // fetchCustomers();
 
-  console.log(erpNext.getTotalCount())
+  // console.log(erpNext.getTotalCount())
+
+  async function getSingleData() {
+    try {
+      const data = await erpNext.getCustomerByName('Sales Invoice','SINV-2021-20813');
+      console.log(data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
+  getSingleData();
+
+

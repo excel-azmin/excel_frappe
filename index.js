@@ -28,15 +28,16 @@ class ERPNext {
     return res;
   }
 
-  async get(resource, name = '') {
+  async get(resource, name) {
     await this.login();
     const url = `${this.baseUrl}/api/resource/${resource}/${name}`;
     const res = await requestPromise.get({
       url,
       jar: this.cookieJar
     });
-    const parsedData = JSON.parse(res);
-    return parsedData.data;
+    console.log(url);
+    // const parsedData = JSON.parse(res);
+    return await JSON.parse(res);
   }
 
   async post(resource, data) {
@@ -112,8 +113,9 @@ class ERPNext {
     });
   }
 
-  async getCustomerByName(name) {
-    return this.get('Customer', name);
+  async getCustomerByName(doctype, name) {
+    const data = await this.get(doctype, name);
+    return data; 
   }
 
   async createCustomer(data) {
