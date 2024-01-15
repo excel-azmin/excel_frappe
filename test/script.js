@@ -6,7 +6,7 @@ const erpNext = new ERPNext({
   baseUrl: 'http://excel_erpnext.localhost:8000'
 });
 
-const pageSize = 500; // Number of customers per page
+const pageSize = 10; // Number of customers per page
 let currentPage = 1; // Current page number
 
 function fetchCustomers() {

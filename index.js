@@ -79,19 +79,28 @@ class ERPNext {
     var _this = this;
     return _this.login().then(function (res) {
       var start = (page - 1) * pageSize;
+      const url = 'http://excel_erpnext.localhost:8000/api/resource/Customer';
+      const fields = '["name", "customer_name", "territory"]';
+      const filters = '[["customer_name", "=", "SOURCE AND SERVICE - MOTIJHEEL"]]';
       var params = {
-        url: _this.baseUrl + "/api/resource/Customer",
+        url: _this.baseUrl + `/api/resource/Customer?fields=${fields}&filters=${filters}`,
+
         jar: _this.cookieJar,
         qs: {
           limit_start: start,
-          limit_page_length: pageSize
-        }
+          limit_page_length: pageSize,
+          order_by: "name asc",
+        },
+        
       };
+
+      console.log(params.url)
+
       return requestPromise.get(params).then(function (customers) {
         customers = JSON.parse(customers);
         var totalCustomers = customers.data.length;
         var customerNames = customers.data.map(function (customer) {
-          return customer.name;
+          return customer;
         });
         return {
           totalCustomers: totalCustomers,
