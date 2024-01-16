@@ -3,7 +3,7 @@ const ERPNext = require('../index'); // Assuming ERPNext.js is in the same direc
 const erpNext = new ERPNext({
   username: 'azmin',
   password: 'Azmin@123#',
-  baseUrl: 'http://excel_erpnext.localhost:8000'
+  baseUrl: 'https://hrv14.excelbd.com'
 });
 
 const pageSize = 10; // Number of customers per page
@@ -31,7 +31,13 @@ function fetchCustomers() {
   
   // fetchCustomers();
 
-  // console.log(erpNext.getTotalCount())
+
+  // get Doctype Total Count
+
+  console.log(erpNext.getTotalCount())
+
+
+  // Get Single Document Data
 
   async function getSingleData() {
     try {
@@ -42,6 +48,57 @@ function fetchCustomers() {
     }
   }
   
-  getSingleData();
+  // getSingleData();
 
 
+  // create
+
+  async function postData() {
+    try {
+      const data = await erpNext.post("Employee Checkin", {
+        "employee": "ETL22040419",
+        "employee_name": "Shaid Azmin",
+        "time": "2024-01-16T12:36:12",
+        "log_type": "OUT"
+      });
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
+  // postData();
+
+
+  /// Update
+
+  async function putData() {
+    try {
+      const data = await erpNext.put("Employee Checkin", "EMP-CKIN-01-2024-000004", {
+        "employee": "ETL20050261",
+        "employee_name": "Mehedi Hasan Emraz",
+        "time": "2024-01-16T12:36:12",
+        "log_type": "OUT"
+      });
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
+  // putData();
+
+
+
+    /// Delete
+
+    async function deleteData() {
+      try {
+        const data = await erpNext.delete("Employee Checkin", "EMP-CKIN-01-2024-000003");
+        console.log(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    
+    // deleteData();

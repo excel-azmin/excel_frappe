@@ -40,11 +40,12 @@ class ERPNext {
     return await JSON.parse(res);
   }
 
-  async post(resource, data) {
+  async post(doctype, data) {
     await this.login();
     const formData = querystring.stringify({ data: JSON.stringify(data) });
     const contentLength = formData.length;
-    const url = `${this.baseUrl}/api/resource/${resource}`;
+    const url = `${this.baseUrl}/api/resource/${doctype}`;
+    console.log(formData);
     const res = await requestPromise.post({
       url,
       jar: this.cookieJar,
@@ -54,15 +55,19 @@ class ERPNext {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     });
+
+    // console.log(res);
+
     const parsedData = JSON.parse(res);
     return parsedData.data;
   }
 
-  async put(resource, name, data) {
+  async put(doctype, name, data) {
     await this.login();
     const formData = querystring.stringify({ data: JSON.stringify(data) });
     const contentLength = formData.length;
-    const url = `${this.baseUrl}/api/resource/${resource}/${name}`;
+    const url = `${this.baseUrl}/api/resource/${doctype}/${name}`;
+    console.log(url);
     const res = await requestPromise.put({
       url,
       jar: this.cookieJar,
@@ -73,7 +78,25 @@ class ERPNext {
       }
     });
     const parsedData = JSON.parse(res);
+    console.log(url);
     return parsedData.data;
+  }
+
+
+  async delete(doctype, name) {
+    await this.login();
+    const url = `${this.baseUrl}/api/resource/${doctype}/${name}`;
+    console.log(url);
+    const res = await requestPromise.delete({
+      url,
+      jar: this.cookieJar,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    });
+    const parsedData = JSON.parse(res);
+    console.log(url);
+    return parsedData;
   }
 
   async getCustomersName(pageSize, page) {
@@ -131,7 +154,8 @@ class ERPNext {
     return _this.login().then(function (res) {
       const doctype = 'Sales Invoice';
       const fields = '["count"(`tabSales Invoice`.`name`) AS total_count ]';
-      const filters = '[["customer_name", "=", "SOURCE AND SERVICE - MOTIJHEEL"]]';
+      // const filters = '[["customer_name", "=", "SOURCE AND SERVICE - MOTIJHEEL"]]';
+      const filters = '';
       var params = {
         url: _this.baseUrl + `/api/method/frappe.client.get_count?doctype=${doctype}&filters=${filters}&fields=${fields}`,
         jar: _this.cookieJar,
