@@ -1,13 +1,10 @@
-const ERPNext = require('../index'); // Assuming ERPNext.js is in the same directory
+const ERPNext = require('excel_frappe'); 
 
 const erpNext = new ERPNext({
   username: 'user',
   password: 'pass',
   baseUrl: 'example.com'
 });
-
-
-
 
   // # Create Docs
 
@@ -56,6 +53,7 @@ function fetchAllDocs() {
         console.error('An error occurred:', error);
       });
   }
+  
   // fetchAllDocs();
 
   // # get Docs Total Count
